@@ -30,28 +30,6 @@ def disable_trace
   set_trace_func nil
 end
 
-access helper methods from the rails console
-http://errtheblog.com/post/43
-def Object.method_added(method)
-  return super(method) unless method == :helper
-  (class<<self;self;end).send(:remove_method, :method_added)
-
-  def helper(*helper_names)
-    returning $helper_proxy ||= Object.new do |helper|
-      helper_names.each { |h| helper.extend "#{h}_helper".classify.constantize }
-    end
-  end
-
-  helper.instance_variable_set("@controller", ActionController::Integration::Session.new)
-
-  def helper.method_missing(method, *args, &block)
-    @controller.send(method, *args, &block) if @controller && method.to_s =~ /_path$|_url$/
-  end
-
-  helper :application rescue nil
-end if ENV['RAILS_ENV']
-
-
 # watching AR do it's thing
 # http://weblog.jamisbuck.org/2007/1/31/more-on-watching-activerecord
 # + comment from the UnderPantsGnome
