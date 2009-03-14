@@ -1,0 +1,17 @@
+[user]
+	name = Michael Cowden
+	email = mcowden@yahoo.com
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+[alias]
+	st = status
+	co = checkout
+	ci = commit
+	ca = commit -a
+	br = branch
+[merge]
+	tool = opendiff
+	summary = true
