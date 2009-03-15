@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require 'ftools'
+require 'fileutils'
 
 FILES = %w( .rake-completion.rb .bashrc .irbrc .dircolors .gitconfig .gitk )
 BACKUP_DIR = '.bootstrap_backups'
@@ -32,3 +33,12 @@ end
 puts "Copying ack to #{USR_LOCAL_BIN} (requires sudo password)"
 system "sudo cp ack #{USR_LOCAL_BIN}"
 system "sudo chmod a+x #{ACK}"
+
+puts "Copying 'cd to here in iterm' script"
+finder_dir = File.join("#{ENV['HOME']}", 'Library', 'Scripts', 'Applications', 'Finder')
+FileUtils::cp_r "finder2iterm.app", finder_dir
+File::chmod 0755, File.join(finder_dir, "finder2iterm.app")
+
+puts 'Drag finder2iterm app to finder window icon bar'
+
+`open #{finder_dir}`
